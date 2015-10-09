@@ -1,0 +1,38 @@
+#!/usr/bin/hassium
+
+# We need to import the Net module for urlDecode()
+# as well as the math module to hash the string and
+# the MySql DLL module to query the database
+use Net;
+use Math;
+use "MySql.dll";
+
+func main () {
+	# Display headers
+	println("Content-Type: text/html;\n\n");
+
+	# Split up our two QUERY_STRING variables that have been
+	# provided to us by the paste.cgi script
+	parts = HttpUtility.urlDecode(args[0]).split("&");
+
+	# Grab the title and content from the broken QUERY_STRING
+	title = parts[0].substring(parts[0].index("=") + 1);
+	content = parts[1].substring(parts[1].index("=") + 1);
+
+	# HAsh the title and content for a unique database entry
+	hash = Math.hash("md5", title + content);
+
+	# Create a MySql connection and open it
+	conn = new Sql("localhost", "Paste", "root", "PASWORD");
+	conn.open();
+
+	# Put the hash, title, and contents into the database
+	conn.query("pastes", ["hash", "name", "paste"], [hash, title, content]);
+
+	# Close the connection
+	conn.close();
+
+	# Display to the user the address of their paste
+	println("<br><br>Your paste is live at: http://HassiumLang.com/Paste/get-paste.cgi?hash=" + hash);
+}
+

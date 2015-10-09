@@ -1,0 +1,11 @@
+#!/usr/bin/hassium
+
+func main () {
+	println("Content-Type: text/html;\n\n");
+	println("<center><h2>Welcome to Hassium Pastebin.</h2><br><br>");
+	println("<form action='paste.cgi' method='get'>
+	Paste Name:<br><input type='text' name='title'></input><br>
+	Paste:<br><textarea name='paste' cols='40' rows='5'></textarea><br>
+	<input type='submit'>
+	</form></center>");
+}

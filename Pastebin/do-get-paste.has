@@ -1,0 +1,45 @@
+#!/usr/bin/hassium
+
+# We need to import the net module to use htmlEncode() and
+# The MySql DLL module to connect to the database.
+use Net;
+use "MySql.dll";
+
+func main () {
+	# Display headers
+	println("Content-Type: text/html;\n\n");
+	# Title
+	println("<center><h2><a href='index.has'>Hassium Pastebin</a></h2>");
+
+	# Initialize variables and get our target from the QUERY_STRING
+	# provided by the get-paste.cgi script.
+	title = "";
+	content = "";
+	hash = args[0].substring(args[0].index("=") + 1);
+
+	# Create our connection
+	conn = new Sql("localhost", "Paste", "root", "PASSWORD");
+	conn.open();
+
+	# Get the values from the database where the hashes are equal
+	data = conn.select("SELECT * FROM pastes WHERE hash=@val1", ["@val1", hash]);
+
+	#Store the values from the database in their respective variables
+	while (data.read()) {
+		title = data.get("name");
+		content = data.get("paste");
+	} else {
+		println("<h3>The requested paste could not be found in the database.</h3>");
+		exit(1);
+	}
+
+	# Close the connection
+	conn.close();
+
+	# Display the results in an HTML escaped format while replacing
+	# newlines with <br>
+	println("Title: <br>" + HttpUtility.htmlEncode(title) + "</br>");
+	println("<br>Content: " + HttpUtility.htmlEncode(content).replace("\r", "<br>").replace("\n", "<br>"));
+
+	print("</center>");
+}
