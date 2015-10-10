@@ -12,7 +12,6 @@ func main () {
 	println("<center><h2><a href='index.has'>Hassium Pastebin</a></h2>");
 
 	# Initialize variables and get our target from the QUERY_STRING
-	# provided by the get-paste.cgi script.
 	title = "";
 	content = "";
 	hash = args[0].substring(args[0].index("=") + 1);
@@ -38,8 +37,8 @@ func main () {
 
 	# Display the results in an HTML escaped format while replacing
 	# newlines with <br>
-	println("Title: <br>" + HttpUtility.htmlEncode(title) + "</br>");
-	println("<br>Content: " + HttpUtility.htmlEncode(content).replace("\r", "<br>").replace("\n", "<br>"));
+	println("</center>Title: <br>" + HttpUtility.htmlEncode(title) + "</br>");
+	println("<br>Content:<br><code style='text-align:left;'><pre>" + HttpUtility.htmlEncode(content) + "</pre>");
 
-	print("</center>");
+	print("</code>");
 }
