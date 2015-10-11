@@ -1,11 +1,186 @@
 #!/usr/bin/hassium
 
+use "header.has";
+
 func main () {
-	println("Content-Type: text/html;\n\n");
-	println("<center><h2>Welcome to Hassium Pastebin.</h2><br><br>");
-	println("<form action='do-paste.has' method='get'>
-	Paste Name:<br><input type='text' name='title'></input><br>
-	Paste:<br><textarea name='paste' cols='40' rows='5'></textarea><br>
-	<input type='submit'>
+	printHeader();
+	println("<center><form action='do-paste.has' method='post' class='ui error' id='theform' onsubmit='if(document.getElementById(\"title\").value != \"\"){return true;}else{alert(\"You must specify a paste name!\");return false;}'>
+	<div class='ui input'><input type='text' name='title' id='title' placeholder='Paste Name' style='width: 352.4px !important;'></input></div><br><br>
+	<select name='lang' id='lang' onchange=\"setLang()\">
+	<option value='plain_text' selected>Plain Text</option>");
+	
+	common = [
+				"actionscript": "ActionScript",
+				"assembly_x86": "x86 Assembly",
+				"sh": "Bash",
+				"batchfile": "Batch file",
+				"c_cpp": "C / C++",
+				"csharp": "C#",
+				"css": "CSS",
+				"hassium": "Hassium",
+				"html": "HTML",
+				"java": "Java",
+				"javascript": "JavaScript",
+				"json": "JSON",
+				"lua": "Lua",
+				"markdown": "Markdown",
+				"mysql": "MySQL",
+				"objectivec": "Objective C",
+				"pascal": "Pascal",
+				"perl": "Perl",
+				"php": "PHP",
+				"powershell": "PowerShell",
+				"python": "Python",
+				"ruby": "Ruby",
+				"vbscript": "VBScript",
+				"xml": "XML",
+				"yaml": "YAML"
+			];
+	println("<optgroup label='Common'>");
+	foreach([id, lang] in common)
+	{
+		println("<option value='" + id + "'>" + lang + "</option>");
+	}
+	println("</optgroup>");
+	languages = [
+					"abap": "ABAP",
+					"abc": "ABC",
+					"ada": "Ada",
+					"apache_conf": "Apache conf file",
+					"applescript": "AppleScript",
+					"asciidoc": "ASCII Doc",
+					"assembly_x86": "x86 Assembly",
+					"autohotkey": "AutoHotKey",		
+					"c9search": "c9 Search",
+					"cirru": "Cirru",
+					"clojure": "Clojure",
+					"cobol": "COBOL",
+					"coffee": "CoffeeScript",
+					"coldfusion": "ColdFusion",
+					"curly": "Curly",
+					"d": "D",
+					"dart": "Dart",
+					"diff": "Diff",
+					"django": "Django",
+					"dockerfile": "Docker file",
+					"dot": "Dot",
+					"eiffel": "Eiffel",
+					"ejs": "EJS",
+					"elixir": "Elixir",
+					"elm": "ELM",
+					"erlang": "Erlang",
+					"forth": "Forth",
+					"ftl": "FTL",
+					"gcode": "G Code",
+					"gherkin": "Gherkin",
+					"gitignore": "Git ignore file",
+					"glsl": "GLSL file",
+					"golang": "Go",
+					"groovy": "Groovy",
+					"haml": "HAML",
+					"handlebars": "Handlebars",
+					"haskell": "Haskell",
+					"haxe": "Haxe",
+					"html_ruby": "HTML with Ruby",
+					"ini": "INI file",
+					"io": "IO file",
+					"jack": "Jack",
+					"jade": "Jade",
+					"jsoniq": "JSONIQ",
+					"jsp": "JSP (Java Server Page)",
+					"jsx": "JSX",
+					"julia": "Julia",
+					"latex", "LaTeX",
+					"lean": "Lean",
+					"less": "LESS",
+					"liquid": "Liquid",
+					"lisp": "Lisp",
+					"live_script": "Live_Script",
+					"livescript": "LiveScript",
+					"logiql": "Logiql",
+					"lsl": "LSL",
+					"luapage": "Lua page",
+					"lucene": "Lucene",
+					"makefile": "Makefile",
+					"mask": "Mask",
+					"matlab": "Matlab",
+					"mavens_mate_log": "Mavens Mate Log",
+					"maze": "Maze",
+					"mel": "Mel",
+					"mips_assembler": "MIPS_Assembler",
+					"mipsassembler": "MIPS Assembler",
+					"mushcode": "Mushcode",
+					"nix": "Nix",
+					"ocaml": "OCaml",
+					"pgsql": "PostgreSQL",
+					"praat": "Praat",
+					"prolog": "Prolog",
+					"properties": "Properties",
+					"protobuf": "Protobuf",
+					"r": "R",
+					"rdoc": "R doc",
+					"rhtml": "R HTML",
+					"rust": "Rust",
+					"sass": "SASS",
+					"scad": "SCAD",
+					"scala": "Scala",
+					"scheme": "Scheme",
+					"scss": "SCSS",
+					"sjs": "SJS",
+					"smarty": "Smarty",
+					"snippets": "Snippets",
+					"soy_template": "Soy Template",
+					"space": "Space",
+					"sql": "SQL",
+					"sqlserver": "SQL Server",
+					"stylus": "Stylus",
+					"svg": "SVG",
+					"tcl": "TCL",
+					"tex": "TeX",
+					"textile": "Textile",
+					"toml": "TOML",
+					"twig": "Twig",
+					"typescript": "TypeScript",
+					"vala": "Vala",
+					"velocity": "Velocity",
+					"verilog": "Verilog",
+					"vhdl": "VHDL",
+					"xquery": "XQuery"	
+				];
+	println("<optgroup label='Other'>");
+	foreach([id, lang] in languages)
+	{
+		println("<option value='" + id + "'>" + lang + "</option>");
+	}
+	println("</optgroup>
+	</select><br><br>
+	<label for='editor'>Paste:</label><br><br>
+	");
+	print("<input type=\"hidden\" name=\"paste\" id=\"paste\"/><div id=\"editor\" style=\"text-align: left;width:100%;height: calc(100vh - 340px);\">");
+    println("</div>");
+	println("<script src=\"../Hassium/ace/src-noconflict/ace.js\" type=\"text/javascript\" charset=\"utf-8\"></script>
+        <script>
+		var temp = false;
+var editor = ace.edit(\"editor\");
+editor.setTheme(\"ace/theme/monokai\");
+editor.getSession().setMode(\"ace/mode/plain_text\");
+editor.getSession().setTabSize(4);
+editor.setHighlightActiveLine(true);
+editor.resize();
+$('#editor').closest('form').submit(function() {
+            var code = editor.getValue();
+            $('#editor').prev('input[type=hidden]').val(code);                
+        });
+$(document).ready(function() {
+$('select#lang').dropdown().width(300);
+});
+function setLang () {
+    var dropdown = document.getElementById (\"lang\");
+    var example = dropdown.options [dropdown.selectedIndex].value;
+    editor.getSession().setMode('ace/mode/' + example);
+}
+</script>"); 
+	println("<input class='ui blue submit button' type='submit'/>
 	</form></center>");
+	printFooter();
 }
