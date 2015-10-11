@@ -1,0 +1,17 @@
+#!/usr/bin/hassium
+
+use net;
+func main()
+{
+	
+	# Display headers
+	println("Content-Type: text/html;\n\n");
+	
+	println(cgi.post);
+	
+	println(cgi.remoteIp);
+	
+	println("<center><h2>Welcome to Hassium Pastebin.</h2><br><br>");
+	println(Information.getEnvironmentVariable("QUERY_STRING"));
+	println("<form method='post' action='test.has'><input type='text' name='field1' value='abcdef'/><input type='submit'/></form>");
+}

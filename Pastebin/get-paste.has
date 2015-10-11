@@ -2,6 +2,7 @@
 
 # We need to import the net module to use htmlEncode() and
 # The MySql DLL module to connect to the database.
+use IO;
 use Net;
 use "MySql.dll";
 use "header.has";
@@ -17,8 +18,10 @@ func main () {
 		lang = "";
 		hash = cgi.get["hash"];
 
+		settings = File.readLines("settings.conf");
+
 		# Create our connection
-		conn = new Sql("localhost", "Paste", "root", "PASSWORD");
+		conn = new Sql(settings[0], settings[1], settings[2], settings[3]);
 		conn.open();
 
 		# Get the values from the database where the hashes are equal
@@ -41,7 +44,7 @@ func main () {
 		# newlines with <br>
 		println("<b>Title: </b>" + HttpUtility.htmlEncode(title) + "<br>");
 		println("<br><b>Language: </b>" + lang + "<br>");
-		println("<br><b>Share URL: </b>" + "<div class='ui input' style='margin-left: 5px;'><input type='text' onClick='this.select();' style='width: 600px;' readonly value='http://HassiumLang.com/Paste/get-paste.has?hash=" + hash + "'></input></div><br>");
+		println("<br><b>Share URL: </b>" + "<div class='ui input' style='margin-left: 5px;'><input type='text' onClick='this.select();' style='width: 600px;' readonly value='" + settings[4] + "/Paste/get-paste.has?hash=" + hash + "'></input></div><br>");
 		println("<br><b>Content:</b><br><br>");
 		print("<div id=\"editor\" name=\"content\" style=\"width:100%;height: calc(100% - 260px);\">");
 		print(HttpUtility.htmlEncode(content));

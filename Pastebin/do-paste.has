@@ -5,7 +5,7 @@
 # the MySql DLL module to query the database
 use Net;
 use Math;
-use io;
+use IO;
 use "MySql.dll";
 
 func main () {
@@ -15,11 +15,13 @@ func main () {
 		content = cgi.post["paste"];
 		lang = cgi.post["lang"];
 
+		settings = File.readLines("settings.conf");
+
 		# Hash the title and content for a unique database entry
 		hash = Math.hash("md5", title + content);
 
 		# Create a MySql connection and open it
-		conn = new Sql("localhost", "Paste", "root", "PASSWORD");
+		conn = new Sql(settings[0], settings[1], settings[2], settings[3]);
 		conn.open();
 
 		# Put the hash, title, and contents into the database
@@ -29,7 +31,7 @@ func main () {
 		conn.close();
 
 		# Redirect the user to their paste
-		url = "http://HassiumLang.com/Paste/get-paste.has?hash=" + hash;
+		url = settings[4] + "/Paste/get-paste.has?hash=" + hash;
 		print("Location: " + url + "\n\n");
 	} catch {
 		print("<script type='text/javascript'>alert('Something has gone wrong');</script>");
