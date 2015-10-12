@@ -1,0 +1,60 @@
+#!/usr/bin/hassium
+
+# We need the IO module to read the settings, Net to
+# access CGI class, MySql.dll for the connection and
+# the generic header file
+use IO;
+use Net;
+use "MySql.dll";
+use "header.has";
+
+func main () {
+	# Show headers
+	printHeader();
+
+	# Title
+	println("<center><h3>Search Results:</h2></center>");
+
+	# Read in our settings for the DB connection
+	settings = File.readLines("settings.conf");
+
+	# Get our QUERY from CGI
+	query = cgi.get["query"].toString().toUpper();
+
+	# Open database connection
+	conn = new Sql(settings[0], settings[1], settings[2], settings[3]);
+	conn.open();
+
+	# Select all pastes and order them by most recent
+	results = conn.select("SELECT * FROM pastes ORDER BY id DESC");
+	copyResults = results;
+
+	# Initialize counter
+	counter = 0;
+	foundOneEntry = false;
+
+	# Iterate over database
+	while (results.read()) {
+		# Get the current entry from the DB in uppercase
+		entry = results.get("name").toString();
+
+		# See if the entry contains the query or the query contains the entry, and if so print
+		# a link to that paste
+		if (entry.toUpper().contains(query) || results.get("paste").toUpper().contains(query.toUpper())) {
+			println((counter++) + ". " + "<a href='get-paste.has?hash=" + results.get("hash") + "'>" + HttpUtility.htmlEncode(entry) + "</a><br>");
+			println("\"" + HttpUtility.htmlEncode(results.get("paste")).split("\n")[0] + "...\"<br><br>");
+			foundOneEntry = true;
+		}
+	# If the entire database was empty (unlikely) then say so
+	} else {
+		println("<h2>Empty Database</h2>");
+		printFooter();
+		exit(0);
+	}
+
+	if (!foundOneEntry)
+		println("<br><center><h3>No Search results found! Try a specific query with complete words.</h3></center>");
+
+	# Display footers
+	printFooter();
+}
