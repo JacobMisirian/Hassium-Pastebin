@@ -44,9 +44,10 @@ func main () {
 		# newlines with <br>
 		println("<b>Title: </b>" + HttpUtility.htmlEncode(title) + "<br>");
 		println("<br><b>Language: </b>" + lang + "<br>");
-		println("<br><b>Share URL: </b>" + "<div class='ui input' style='margin-left: 5px;'><input type='text' onClick='this.select();' style='width: 600px;' readonly value='" + settings[4] + "/Paste/get-paste.has?hash=" + hash + "'></input></div><br>");
+		println("<br><b>Share URL: </b>" + "<div class='ui input' style='margin-left: 5px;'><input type='text' onClick='this.select();' style='width: 600px;' readonly value='" + settings[4] + "/Paste/get-paste.has?hash=" + hash + "'></input></div>");
+		println("<button class='ui primary button' style='height: 38px; margin-left: 5px;'>Download</button><br>");
 		println("<br><b>Content:</b><br><br>");
-		print("<div id=\"editor\" name=\"content\" style=\"width:100%;height: calc(100% - 260px);\">");
+		print("<div id=\"editor\" name=\"content\" style=\"width:100%;height: calc(100vh - 370px);\">");
 		print(HttpUtility.htmlEncode(content));
 	    	println("</div>");
 		println("<script src=\"../Hassium/ace/src-noconflict/ace.js\" type=\"text/javascript\" charset=\"utf-8\"></script>

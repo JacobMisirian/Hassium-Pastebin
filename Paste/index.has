@@ -11,10 +11,6 @@ func main () {
 	conn = new Sql(settings[0], settings[1], settings[2], settings[3]);
 	conn.open();
 
-	print("<div style='text-align:left;position:absolute;left:20px;'><b><h3>Search Pastes:</h3><br>");
-	print("<form action='search.has' method='get' class='ui error' onsubmit='if(document.getElementById(\"query\").value != \"\"){return true;}else{alert(\"You must specify a search query!\");return false;}'>
-		<div class='ui input'><input type='text' name='query' id='query' placeholder='Query' style='width: 250.4px !important;'></input></div><input style='height: 38px !important; margin-left: 10px; margin-top: 1px;' class='ui blue submit button' type='submit' text='Search'/></form></div><br><br>");
-
 	result = conn.select("SELECT * FROM pastes ORDER BY id DESC");
 
 	print("<div style='text-align:right;position:absolute;right:20px;'><b><h3>Recent Pastes:</h3>");

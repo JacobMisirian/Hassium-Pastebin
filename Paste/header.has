@@ -1,0 +1,48 @@
+func printHeader() {
+	println("Content-Type: text/html;\n\n");
+	println("<!DOCTYPE html>
+<html>
+    <head>
+        <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js\"></script>
+        <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.css\" />
+        <script src=\"https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.js\"></script>
+	<script src=\"https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js\"></script>
+        <title>
+            Hassium Pastebin
+        </title>
+        <style type=\"text/css\">
+			body, .ace_gutter-layer {
+				background-color: #272822 !important;
+				color: white;
+			}
+        </style>
+    </head>
+        <body>
+        <div class=\"ui inverted menu\" style=\"height: 44px;\">
+        	<a class=\"header item\" href=\"http://hassiumlang.com/Paste\">
+                	Hassium Pastebin
+            	</a>
+		<a class=\"item\" href=\"http://hassiumlang.com\">
+                	Hassium official website
+            	</a>
+		<a class=\"header item\" href=\"http://hassiumlang.com/Paste\">
+                	Submit a Paste
+            	</a>
+		
+
+		<form action='search.has' id='searchform' method='get' class='ui error' onsubmit='if(document.getElementById(\"query\").value != \"\"){return true;}else{alert(\"You must specify a search query!\");return false;}'>
+			<div class='ui icon input' style='height: 38px; width: 350px; margin-top: 2px; position: absolute; left: calc(50vw - 175px);'>
+				<input type='text' name='query' id='query' placeholder='Search...'>
+				<i class='inverted circular search link icon' onclick='$(\"#searchform\").submit();'></i>
+			</div>
+			</form>
+        </div>");
+	println("<center><h2>Welcome to Hassium Pastebin.</h2><br><sub>Pastebin Written Entirely In Hassium<br><br></center>");
+	println("<div id='container' style='margin: 20px;'>");
+}
+
+func printFooter() {
+	println("</div>
+	    	</body>
+		</html>");
+}
