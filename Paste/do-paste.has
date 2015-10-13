@@ -9,6 +9,10 @@ use IO;
 use "MySql.dll";
 
 func main () {
+	if(!(cgi.post.containsKey("title") && cgi.post.containsKey("paste") && cgi.post.containsKey("lang"))) {
+		println("Location: index.has\n\n");
+	}
+
 	try {
 		# Load parameters
 		title = cgi.post["title"];

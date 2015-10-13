@@ -9,6 +9,11 @@ use "MySql.dll";
 use "header.has";
 
 func main () {
+	if(!cgi.get.containsKey("query"))
+	{
+		println("Location: index.has\n\n");
+	}
+
 	# Show headers
 	printHeader();
 
