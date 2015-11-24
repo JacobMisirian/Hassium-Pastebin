@@ -8,17 +8,18 @@ func main()
 func printHeader()
 {
 	println("Content-Type: text/html;\n\n");
-	println("<!DOCTYPE html>
+	>>>
+<!DOCTYPE html>
 <html>
     <head>
-        <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js\"></script>
-        <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.css\" />
-        <script src=\"https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.js\"></script>
-	<script src=\"https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js\"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.1/semantic.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
         <title>
             Hassium Pastebin
         </title>
-        <style type=\"text/css\">
+        <style type="text/css">
 			body, .ace_gutter-layer {
 				background-color: #272822 !important;
 				color: white;
@@ -26,33 +27,36 @@ func printHeader()
         </style>
     </head>
         <body>
-        <div class=\"ui inverted menu\" style=\"height: 44px;\">
-			<a class=\"item\" href=\"http://hassiumlang.com\">
+        <div class="ui inverted menu" style="height: 44px;">
+			<a class="item" href="http://hassiumlang.com">
                 Hassium official website
             </a>
-			<a class=\"item\" href=\"http://hassiumlang.com/Hassium\">
+			<a class="item" href="http://hassiumlang.com/Hassium">
                 Try Hassium Online
             </a>
-			<a class=\"header item\" href=\"http://hassiumlang.com/Paste\">
+			<a class="header item" href="http://hassiumlang.com/Paste">
                 Hassium Pastebin
             </a>
-			<a class=\"item\" href=\"http://hassiumlang.com/Redirect\">
+			<a class="item" href="http://hassiumlang.com/Redirect">
                 Shorten URL
             </a>
-			<form style='position: absolute; right: 20px;' action='search.has' id='searchform' method='get' class='ui error' onsubmit='if(document.getElementById(\"query\").value != \"\"){return true;}else{alert(\"You must specify a search query!\");return false;}'>
+			<form style='position: absolute; right: 20px;' action='search.has' id='searchform' method='get' class='ui error' onsubmit='if(document.getElementById("query").value != ""){return true;}else{alert("You must specify a search query!");return false;}'>
 			<div class='ui inverted transparent icon input' style='height: 38px; width: 350px; margin-top: 2px;'>
 				<input type='text' name='query' id='query' placeholder='Search...'>
-				<i class='inverted circular search link icon' onclick='$(\"#searchform\").submit();'></i>
+				<i class='inverted circular search link icon' onclick='$("#searchform").submit();'></i>
 			</div>
 			</form>
-        </div>");
-	println("<center><h2>Welcome to Hassium Pastebin.</h2><br><br></center>");
-	println("<div id='container' style='margin: 20px;'>");
+        </div>
+	<center><h2>Welcome to Hassium Pastebin.</h2><br><br></center>
+	<div id='container' style='margin: 20px;'>
+	<<<
 }
 
 func printFooter()
 {
-	println("</div>
+>>>
+	</div>
     </body>
-</html>");
+</html>
+<<<
 }

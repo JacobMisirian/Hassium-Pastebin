@@ -1,0 +1,16 @@
+#!/usr/bin/hassium
+
+
+func main()
+{
+	println("Content-Type: text/html\n\n");
+
+	a = runtimecall("System.Environment.GetEnvironmentVariables").sort();
+
+	println("<table border=1><tr><th>Variable</th><th>Value</th></tr>");
+	foreach([key, value] in a)
+	{
+		println("<tr><td>", key, "</td><td>", value, "</tr>");
+	}
+	println("</table>");
+}

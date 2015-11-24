@@ -11,7 +11,6 @@ func main () {
 	try {
 		# Display headers
 		printHeader();
-
 		# Initialize variables and get our target from the QUERY_STRING
 		title = "";
 		content = "";
@@ -42,45 +41,56 @@ func main () {
 
 		# Display the results in an HTML escaped format while replacing
 		# newlines with <br>
-		println("<b>Title: </b>" + HttpUtility.htmlEncode(title) + "<br>");
-		println("<br><b>Language: </b>" + lang + "<br>");
-		println("<br><b>Share URL: </b>" + "<div class='ui input' style='margin-left: 5px;'><input type='text' onClick='this.select();' style='width: 600px;' readonly value='" + settings[4] + "/Paste/get-paste.has?hash=" + hash + "'></input></div>");
-		println("<button class='ui primary button' style='height: 38px; margin-left: 5px;' id='btnDownload'>Download</button><br>");
-		println("<br><b>Content:</b><br><br>");
-		print("<div id=\"editor\" name=\"content\" style=\"width:100%;height: calc(100vh - 370px);\">");
-		print(HttpUtility.htmlEncode(content));
-	    println("</div>");
-		println("<script src=\"../Hassium/ace/src-noconflict/ace.js\" type=\"text/javascript\" charset=\"utf-8\"></script>
-        	<script>
-			var temp = false;
-			var editor = ace.edit(\"editor\");
-			editor.setTheme(\"ace/theme/monokai\");
-			editor.getSession().setMode(\"ace/mode/" + lang + "\");
-			editor.getSession().setTabSize(4);
-			editor.setHighlightActiveLine(true);
-			editor.setReadOnly(true);
-			editor.resize();
+		>>> 
+<b>Title: </b> <<< print(HttpUtility.htmlEncode(title)) >>>
+<br><br><b>Language: </b> <<< print(lang); >>>
+<br><br><b>Share URL: </b><div class='ui input' style='margin-left: 5px;'><input type='text' onClick='this.select();' style='width: 600px;' readonly value='<<< print(settings[4] + "/Paste/get-paste.has?hash=" + hash) >>>'></input></div>
+<button class='ui primary button icon right labeled' style='height: 38px; margin-left: 5px;' id='btnDownload'>Download<i class="download right icon"></i></button>
+<<<
+if(lang == "hassium")
+{
+	>>><form action="http://www.hassiumlang.com/Hassium/index.php" method="post" style="display: inline;"><input type="hidden" id="code" name="code"></input><button class='ui primary submit button icon right labeled' style='height: 38px; margin-left: 5px;' id='btnRunHassium'>Try Hassium Online<i class="play right icon"></i></button></form><<<
+}
+>>>
+<br>
+<br><b>Content:</b><br><br>
+<div id="editor" name="content" style="width:100%;height: calc(100vh - 370px);"><<< print(HttpUtility.htmlEncode(content)) >>></div>
+<script src="../Hassium/ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	var temp = false;
+	var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/monokai");
+	editor.getSession().setMode("ace/mode/<<< print(lang) >>>");
+	editor.getSession().setTabSize(4);
+	editor.setHighlightActiveLine(true);
+	editor.setReadOnly(true);
+	editor.resize();
+	
+	$('document').ready(function() {
+		$('#btnDownload').click(function(e)
+		{
+			var cleanedup = '<<< print(HttpUtility.htmlEncode(title)) >>>'.replace(/[\0\/:\\?*+%\\xa0]+/g, '_') + '.txt';
+			var element = document.createElement('a');
+			element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(editor.getValue()));
+			element.setAttribute('download', cleanedup);
 			
-			$('document').ready(function() {
-				$('#btnDownload').click(function(e)
-				{
-					var cleanedup = '" + HttpUtility.htmlEncode(title) + "'.replace(/[\0\/:\\?*+%\\xa0]+/g, '_') + '.txt';
-					var element = document.createElement('a');
-					element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent('" + content.addSlashes() + "'));
-					element.setAttribute('download', cleanedup);
-					
-					element.style.display = 'none';
-					document.body.appendChild(element);
-					
-					element.click();
-					
-					document.body.removeChild(element);
-				});
-			});
-		</script>");
+			element.style.display = 'none';
+			document.body.appendChild(element);
+			
+			element.click();
+			
+			document.body.removeChild(element);
+		});
+		$('#btnRunHassium').click(function(e)
+		{
+			$('#code').val(editor.getValue());
+		});
+	});
+</script>
+		<<<
 
 		printFooter();
 	} catch {
-		print("<script type='text/javascript'>alert('Something has gone wrong');</script>");
+		>>><script type='text/javascript'>alert('Something has gone wrong');</script><<<
 	}
 }

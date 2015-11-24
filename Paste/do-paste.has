@@ -38,6 +38,6 @@ func main () {
 		url = settings[4] + "/Paste/get-paste.has?hash=" + hash;
 		print("Location: " + url + "\n\n");
 	} catch {
-		print("<script type='text/javascript'>alert('Something has gone wrong');</script>");
+		>>><script type='text/javascript'>alert('Something has gone wrong');</script><<<
 	}
 }
