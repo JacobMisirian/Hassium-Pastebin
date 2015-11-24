@@ -1,0 +1,21 @@
+use IO;
+
+func main () {
+	configuration = [];
+	println("Welcome to the Hassium-Pastebin setup, please make sure that hassium is accessable by
+		your webserver before proceeding.");
+	println("Enter your database location(usually localhost):");
+	configuration.add(input());
+	println("Enter the name of the table (should be Paste):");
+	configuration.add(input());
+	println("Enter the database username:");
+	configuration.add(input());
+	println("Enter the database password:");
+	configuration.add(input());
+	println("Enter the URL of your website:");
+	configuration.add(input());
+	File.writeText("Paste/settings.conf", "");
+	foreach (line in configuration)
+		File.append("Paste/settings.conf", line + "\n");
+	Directory.move("Paste", "/var/www/html/Paste");
+}
